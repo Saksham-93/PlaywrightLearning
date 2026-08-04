@@ -10,6 +10,7 @@
  *
  * A key difference is that TypeScript is a statically typed language,
  * while JavaScript is dynamically typed.
+ * Test
  */
 
 console.log("Welcome to Typescript")
