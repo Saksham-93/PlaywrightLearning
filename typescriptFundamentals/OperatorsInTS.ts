@@ -55,10 +55,14 @@ console.log("\n--- COMPARISON OPERATORS ---");
 let val1: number = 10;
 let val2: any = "10"; // Using any to allow comparison with string for demo
 
-// Loose Equality: Checks value, performs type coercion
+// Loose Equality (==): Checks value only.
+// If the types are different, JS performs "Type Coercion" (converts one type to another)
+// before comparing. Example: 10 == "10" is true because "10" is coerced to a number.
 console.log(`Loose Equality (10 == "10"): ${val1 == val2}`); // true
 
-// Strict Equality: Checks both value AND type (Recommended in TS)
+// Strict Equality (===): Checks both value AND type.
+// No type coercion happens. If the types are different, it immediately returns false.
+// This is the standard and recommended approach in TypeScript for reliability.
 console.log(`Strict Equality (10 === "10"): ${val1 === val2}`); // false
 
 console.log(`Not Equal (!=): ${val1 != 5}`);           // true
