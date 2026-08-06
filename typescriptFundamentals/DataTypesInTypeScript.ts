@@ -45,6 +45,12 @@ console.log("\n");
 
 // String: Textual data
 let username: string = "Saksham Sahani";
+
+	// Example: Passing string as parameter and using backticks (Template Literals)
+	function greetUser(name: string): void {
+	    console.log(`Hello, ${name}! Welcome to TypeScript.`);
+	}
+	greetUser(username);
 console.log(`String: ${username}`);
 
 // Number: Integers, floating point, hexadecimal, binary, and octal
