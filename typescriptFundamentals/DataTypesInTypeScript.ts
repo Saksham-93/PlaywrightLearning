@@ -9,9 +9,39 @@
  */
 
 // =============================================================================
-// 1. PRIMITIVE TYPES
+// 1. CONCEPTUAL FOUNDATIONS: Types, Annotations & Inference
 // =============================================================================
-console.log("--- PRIMITIVE TYPES ---");
+console.log("--- CONCEPTUAL FOUNDATIONS ---");
+
+/**
+ * A. WHAT IS A DATA TYPE?
+ * A data type is an attribute of data which tells the compiler or interpreter
+ * how the programmer intends to use the data.
+ * For example, a 'string' is for text, a 'number' is for calculations.
+ */
+
+/**
+ * B. TYPE ANNOTATIONS
+ * Type annotations are explicit declarations of the type of a variable.
+ * Syntax: let variableName: type = value;
+ */
+let annotatedCity: string = "Bangalore"; // Explicitly telling TS this is a string
+console.log(`Type Annotation: ${annotatedCity}`);
+
+/**
+ * C. TYPE INFERENCE
+ * TypeScript is smart. If you provide a value during initialization,
+ * TS "infers" (guesses) the type automatically without needing an annotation.
+ */
+let inferredCountry = "India"; // TS infers this is a 'string' because the value is "India"
+// inferredCountry = 10; // ERROR: Type 'number' is not assignable to type 'string'.
+console.log(`Type Inference: ${inferredCountry}`);
+
+console.log("\n");
+
+// =============================================================================
+// 2. PRIMITIVE TYPES
+// =============================================================================
 
 // String: Textual data
 let username: string = "Saksham Sahani";
