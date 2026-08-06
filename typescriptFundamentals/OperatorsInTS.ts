@@ -72,13 +72,14 @@ console.log(`Less Than (10 < 5): ${val1 < 5}`);        // false
 console.log(`Greater or Equal (10 >= 10): ${val1 >= 10}`); // true
 
 // =============================================================================
-// 4. LOGICAL OPERATORS
+// 4. LOGICAL OPERATORS & COMBINED CONDITIONS
 // =============================================================================
-console.log("\n--- LOGICAL OPERATORS ---");
+console.log("\n--- LOGICAL OPERATORS & COMBINED CONDITIONS ---");
 
 let isSunny: boolean = true;
 let isWarm: boolean = false;
 
+// Basic Logical Operators
 // AND (&&): True if both are true
 console.log(`Logical AND (true && false): ${isSunny && isWarm}`); // false
 
@@ -87,6 +88,30 @@ console.log(`Logical OR (true || false): ${isSunny || isWarm}`);  // true
 
 // NOT (!): Reverses the boolean value
 console.log(`Logical NOT (!true): ${!isSunny}`); // false
+
+// --- COMBINATION OF LOGICAL AND COMPARISON OPERATORS ---
+/**
+ * In real-world apps, we rarely use logical operators alone.
+ * We combine them with comparison operators to create complex business logic.
+ */
+let userAge: number = 25;
+let hasMembership: boolean = true;
+let accountBalance: number = 100;
+
+// Scenario: User can enter the club if they are 18+ AND (have membership OR balance > 50)
+let canEnterClub = (userAge >= 18) && (hasMembership || accountBalance > 50);
+console.log(`Can enter club (Age >= 18 AND (Member OR Balance > 50)): ${canEnterClub}`); // true
+
+// Scenario: User gets a discount if they are under 18 OR over 60
+let userAge2: number = 65;
+let getsDiscount = (userAge2 < 18) || (userAge2 > 60);
+console.log(`Gets discount (Age < 18 OR Age > 60): ${getsDiscount}`); // true
+
+// Scenario: Security check - User is blocked if they are NOT an admin AND NOT a moderator
+let isAdmin: boolean = false;
+let isModerator: boolean = false;
+let isBlocked = !(isAdmin || isModerator);
+console.log(`Is blocked (NOT (Admin OR Moderator)): ${isBlocked}`); // true
 
 // =============================================================================
 // 5. BITWISE OPERATORS (Operating on binary representations)
