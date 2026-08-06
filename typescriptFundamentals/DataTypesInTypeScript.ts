@@ -107,9 +107,13 @@ console.log("\n--- SPECIAL TYPES ---");
 
 // Any: The "escape hatch". Turns off type checking. Use sparingly!
 let randomData: any = "Hello";
+console.log(`Any Type: ${randomData}, Current Type: ${typeof randomData}`);
+
 randomData = 10; // No error
+console.log(`Any Type: ${randomData}, Current Type: ${typeof randomData}`);
+
 randomData = true; // No error
-console.log(`Any Type: ${randomData}`);
+console.log(`Any Type: ${randomData}, Current Type: ${typeof randomData}`);
 
 // Unknown: A safer version of 'any'. You must check the type before using it.
 let mysteryValue: unknown = "I am a secret";
