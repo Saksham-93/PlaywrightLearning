@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering While Loops in TypeScript</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --accent: #22d3ee;
+            --accent-dim: rgba(34, 211, 238, 0.1);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --code-bg: #0a0f1d;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme="dark"]) {
+                --bg: #f8fafc;
+                --surface: #ffffff;
+                --surface-light: #f1f5f9;
+                --accent: #0891b2;
+                --accent-dim: rgba(8, 145, 178, 0.1);
+                --text: #0f172a;
+                --text-muted: #64748b;
+                --warning: #d97706;
+                --danger: #dc2626;
+                --code-bg: #f1f5f9;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --accent: #22d3ee;
+            --accent-dim: rgba(34, 211, 238, 0.1);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --code-bg: #0a0f1d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Hero Section */
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-wrap: balance;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Layout */
+        .concept-section {
+            margin-bottom: 6rem;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-number {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Explanation Cards */
+        .explanation {
+            background-color: var(--surface);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--surface-light);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .explanation p {
+            margin-bottom: 1rem;
+        }
+
+        .explanation ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .explanation li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .explanation li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Code Styling */
+        .code-block {
+            background-color: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            overflow-x: auto;
+            border: 1px solid var(--surface-light);
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .code-header {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .token-keyword { color: #c678dd; }
+        .token-type { color: #61afef; }
+        .token-string { color: #98c379; }
+        .token-comment { color: #5c6370; font-style: italic; }
+        .token-number { color: #d19a66; }
+        .token-function { color: #61afef; }
+
+        /* Diagram Styling */
+        .diagram-container {
+            margin: 2rem 0;
+            text-align: center;
+            padding: 2rem;
+            background: var(--accent-dim);
+            border-radius: 1.5rem;
+        }
+
+        .diagram-container figure {
+            margin: 0;
+        }
+
+        .diagram-container figcaption {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Warning Callout */
+        .warning-box {
+            background-color: var(--surface);
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 0 1rem 1rem 0;
+            margin: 2rem 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .warning-icon {
+            color: var(--warning);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .warning-content h4 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .danger-box {
+            border-left-color: var(--danger);
+        }
+        .danger-box .warning-icon { color: var(--danger); }
+        .danger-box .warning-content h4 { color: var(--danger); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--surface-light);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="tag">TypeScript Fundamentals</div>
+            <h1>The While Loop: <br>Control the Cycle</h1>
+            <p class="hero-subtitle">An entry-controlled loop that repeats a block of code as long as a specified condition evaluates to true.</p>
+        </header>
+
+        <section class="concept-section">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2>The Basic Mechanism</h2>
+            </div>
+            <div class="grid">
+                <div class="explanation">
+                    <p>The <strong>while loop</strong> is the simplest form of repetition. It checks the condition <em>before</em> executing the body.</p>
+                    <ul>
+                        <li><strong>Initialization:</strong> A variable is set before the loop starts.</li>
+                        <li><strong>Condition:</strong> A boolean expression checked at the start of every iteration.</li>
+                        <li><strong>Update:</strong> The variable is modified inside the loop to eventually make the condition false.</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+                    <span class="code-header">example.ts</span>
+                    <span class="token-comment">// Simple count from 1 to 5</span><br>
+                    <span class="token-keyword">let</span> num: <span class="token-type">number</span> = <span class="token-number">1</span>;<br><br>
+                    <span class="token-keyword">while</span> (num &lt;= <span class="token-number">5</span>) {<br>
+                    &nbsp;&nbsp;<span class="token-function">console.log</span>(num);<br>
+                    &nbsp;&nbsp;num++; <span class="token-comment">// Incrementing the counter</span><br>
+                    }
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <figure>
+                    <svg viewBox="0 0 400 220" role="img" aria-label="While loop execution flow">
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                            </marker>
+                        </defs>
+                        <!-- Start Node -->
+                        <rect x="160" y="10" width="80" height="40" rx="20" fill="var(--surface)" stroke="currentColor" stroke-width="2" />
+                        <text x="200" y="35" text-anchor="middle" fill="currentColor" font-size="12">START</text>
+
+                        <!-- Condition Diamond -->
+                        <path d="M 200 70 L 260 100 L 200 130 L 140 100 Z" fill="var(--accent-dim)" stroke="var(--accent)" stroke-width="3" />
+                        <text x="200" y="105" text-anchor="middle" fill="var(--accent)" font-size="12" font-weight="bold">Condition?</text>
+
+                        <!-- Body Rect -->
+                        <rect x="150" y="160" width="100" height="40" rx="8" fill="var(--surface)" stroke="currentColor" stroke-width="2" />
+                        <text x="200" y="185" text-anchor="middle" fill="currentColor" font-size="12">Execute Body</text>
+
+                        <!-- Paths -->
+                        <line x1="200" y1="50" x2="200" y2="70" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" />
+                        <line x1="200" y1="130" x2="200" y2="160" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" />
+
+                        <!-- Loop back path -->
+                        <path d="M 150 180 L 100 180 L 100 100 L 140 100" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow)" />
+
+                        <!-- Exit path -->
+                        <line x1="260" y1="100" x2="320" y2="100" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="325" y="105" fill="var(--text-muted)" font-size="11">Exit</text>
+                    </svg>
+                    <figcaption>Logic Flow: The condition is evaluated first. If false, the loop is skipped entirely.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="concept-section">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2>Logic & Filtering</h2>
+            </div>
+            <div class="grid">
+                <div class="explanation">
+                    <p>Loops are powerful when combined with <strong>conditional statements</strong>. This allows you to process only specific data points.</p>
+                    <p>In this example, we use the <em>modulo operator (%)</em> to identify even numbers.</p>
+                    <ul>
+                        <li><code>i % 2 === 0</code>: True if number is even.</li>
+                        <li><code>i % 2 !== 0</code>: True if number is odd.</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+                    <span class="code-header">filter.ts</span>
+                    <span class="token-comment">// Print even numbers from 1 to 10</span><br>
+                    <span class="token-keyword">let</span> i: <span class="token-type">number</span> = <span class="token-number">1</span>;<br><br>
+                    <span class="token-keyword">while</span> (i &lt;= <span class="token-number">10</span>) {<br>
+                    &nbsp;&nbsp;<span class="token-keyword">if</span> (i % <span class="token-number">2</span> === <span class="token-number">0</span>) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="token-function">console.log</span>(i);<br>
+                    &nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;i++; <span class="token-comment">// Always increment, regardless of if-block</span><br>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <section class="concept-section">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2>Directional Control</h2>
+            </div>
+            <div class="grid">
+                <div class="explanation">
+                    <p>By changing the comparison operator and the update expression, you can reverse the flow of the loop.</p>
+                    <p>To count downwards, use <code>&gt;=</code> (greater than or equal) and <code>--</code> (decrement).</p>
+                </div>
+                <div class="code-block">
+                    <span class="code-header">descend.ts</span>
+                    <span class="token-comment">// Countdown from 10 to 1</span><br>
+                    <span class="token-keyword">let</span> i: <span class="token-type">number</span> = <span class="token-number">10</span>;<br><br>
+                    <span class="token-keyword">while</span> (i &gt;= <span class="token-number">1</span>) {<br>
+                    &nbsp;&nbsp;<span class="token-function">console.log</span>(i);<br>
+                    &nbsp;&nbsp;i--; <span class="token-comment">// Subtract 1 each time</span><br>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <section class="concept-section">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2>The Danger Zone</h2>
+            </div>
+
+            <div class="warning-box danger-box">
+                <div class="warning-icon">⚠</div>
+                <div class="warning-content">
+                    <h4>The Infinite Loop</h4>
+                    <p>An infinite loop occurs when the condition <strong>never</strong> becomes false. This will freeze your application or crash the browser tab.</p>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="explanation">
+                    <p>Common causes of infinite loops:</p>
+                    <ul>
+                        <li>Forgetting the update expression (<code>i++</code>).</li>
+                        <li>Updating the variable in the wrong direction (e.g., <code>i--</code> when you need <code>i++</code>).</li>
+                        <li>A condition that is mathematically impossible to fail.</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+                    <span class="code-header">danger.ts</span>
+                    <span class="token-keyword">let</span> i: <span class="token-type">number</span> = <span class="token-number">1</span>;<br><br>
+                    <span class="token-keyword">while</span> (i &lt;= <span class="token-number">5</span>) {<br>
+                    &nbsp;&nbsp;<span class="token-function">console.log</span>(<span class="token-string">"I will never stop!"</span>);<br>
+                    &nbsp;&nbsp;<span class="token-comment">// ERROR: Missing i++ here!</span><br>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Designed for TypeScript Fundamentals &bull; 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
