@@ -52,8 +52,16 @@ function calculateFactorial(n: number): number {
 // Math.floor() to remove the last digit.
 // =============================================================================
 function reverseNumber(num: number): number {
-    // TODO: Implement using a while loop
-    return 0;
+    let reversed = 0;
+    let tempNum = num;
+
+    while (tempNum > 0) {
+        const lastDigit = tempNum % 10;      // Pluck the last digit
+        reversed = (reversed * 10) + lastDigit; // Shift left and add digit
+        tempNum = Math.floor(tempNum / 10); // Remove the last digit
+    }
+
+    return reversed;
 }
 
 // =============================================================================
@@ -64,7 +72,20 @@ function reverseNumber(num: number): number {
 // Example: printFibonacci(5) => 0, 1, 1, 2, 3
 // =============================================================================
 function printFibonacci(n: number): void {
-    // TODO: Implement using a while loop
+    let a = 0;
+    let b = 1;
+    let count = 0;
+    let result = [];
+
+    while (count < n) {
+        result.push(a); // Store the current number
+        let next = a + b; // Calculate the next number in sequence
+        a = b;           // Shift b to a
+        b = next;       // Shift next to b
+        count++;
+    }
+
+    console.log(result.join(", "));
 }
 
 // =============================================================================
@@ -75,8 +96,18 @@ function printFibonacci(n: number): void {
 // Example: isPrime(7) => true, isPrime(10) => false
 // =============================================================================
 function isPrime(n: number): boolean {
-    // TODO: Implement using a while loop
-    return false;
+    if (n <= 1) return false; // Prime numbers must be greater than 1
+
+    let i = 2;
+    // Check divisors from 2 up to the square root of n for efficiency
+    while (i * i <= n) {
+        if (n % i === 0) {
+            return false; // Found a divisor, so it's not prime
+        }
+        i++;
+    }
+
+    return true; // No divisors found, it is prime
 }
 
 // =============================================================================
