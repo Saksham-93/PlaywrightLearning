@@ -1,23 +1,14 @@
-/*
+/**
+ * Playwright Test: CSS Locators Verification
+ *
+ * This test suite explores various CSS selector strategies, including:
+ * - Basic selectors: ID, Class, and Attributes.
+ * - Absolute vs. Relative CSS paths.
+ * - Advanced CSS concepts for navigating complex DOM structures.
+ *
+ * Purpose: Learning how to precisely target elements using CSS selectors.
+ */
 
-CSS stands for cascading style sheets
-
-html+js+css
-
-Types of CSS Locators
-
-1) Absolute CSS Locator
-2) Relative CSS Locator
-
-How to use CSS Locator ->
-
-1) tag with id                     tag#id
-2) tag with class                  tag.class
-3) tag with other attribute        tag[attribute=value]
-4) tag with class and attribute    tag.class[attribute=value]
-
-
-*/
 
 import {test,expect,Locator} from "@playwright/test"
 

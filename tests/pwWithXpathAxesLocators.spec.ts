@@ -1,3 +1,16 @@
+/**
+ * Playwright Test: XPath Axes Locators
+ *
+ * This test suite demonstrates the use of XPath Axes to navigate the DOM relative to a node:
+ * - self: Selects the current node.
+ * - parent: Selects the immediate parent.
+ * - child: Selects immediate children.
+ * - ancestor: Selects all ancestors (parent, grandparent, etc.).
+ * - descendant: Selects all descendants (children, grandchildren, etc.).
+ *
+ * Purpose: Mastering advanced DOM traversal using XPath Axes.
+ */
+
 import {test,expect,Locator} from "@playwright/test"
 
 test("Hands on Xpath Self locator example " , async({page})=>{

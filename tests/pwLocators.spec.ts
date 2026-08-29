@@ -1,17 +1,13 @@
-/*
-Locator - Idnetifies an element on the webpage
-DOM - Document object Model
+/**
+ * Playwright Test: Built-in Locators
+ *
+ * This test suite demonstrates Playwright's recommended "User-First" locators:
+ * - getByAltText(), getByText(), getByRole(), getByLabel().
+ * - getByPlaceholder(), getByTitle(), and getByTestId().
+ *
+ * Purpose: Learning how to locate elements based on accessibility attributes and user-visible text.
+ */
 
-
-1) page.getByAltText() -- to locate an element , usually image, by its text alternative
-2) page.getByText()  --    to locate by text content
-3) page.getByRole()  -- to locate by explicit and implicit accessibility attributes
-4) page.getByLabel() -- to locate a form control by assossciated label's text
-5) page.getByPlaceHolder() -- to locate an input by placeholder
-6) page.getByTitle() -- to locate an element by its title attribute
-7) page.getByTestId() -- to locate an element based on it's data-testId attribute
-
-*/
 
 import {test,expect,Locator} from "@playwright/test"
 

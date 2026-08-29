@@ -1,3 +1,15 @@
+/**
+ * Playwright Test: XPath Locators Verification
+ *
+ * This test suite covers a wide range of XPath locator techniques:
+ * - Basic XPath and handling multiple elements.
+ * - Using functions like contains() and starts-with().
+ * - Utilizing index-based locators (last(), position()).
+ * - Implementing dynamic locators for changing element attributes.
+ *
+ * Purpose: Learning to use XPath for flexible and powerful element location.
+ */
+
  import {test,expect,Locator} from "@playwright/test"
 
  test("Hands on with Playwright Locators" , async({page})=>{
