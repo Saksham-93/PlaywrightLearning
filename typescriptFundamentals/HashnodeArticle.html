@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering TypeScript OOP: An Architect's Log</title>
+    <style>
+        :root {
+            --ground: #FDFDFB;
+            --text: #1A1A1B;
+            --accent: #2563EB;
+            --subtle: #E2E8F0;
+            --highlight: #DBEAFE;
+            --code-bg: #F8FAFC;
+            --border: #CBD5E1;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --ground: #0F172A;
+                --text: #F1F5F9;
+                --accent: #60A5FA;
+                --subtle: #1E293B;
+                --highlight: #1E3A8A;
+                --code-bg: #1E293B;
+                --border: #334155;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --ground: #0F172A;
+            --text: #F1F5F9;
+            --accent: #60A5FA;
+            --subtle: #1E293B;
+            --highlight: #1E3A8A;
+            --code-bg: #1E293B;
+            --border: #334155;
+        }
+
+        body {
+            background-color: var(--ground);
+            color: var(--text);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        h1 {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin: 0 0 1.5rem 0;
+            text-wrap: balance;
+            font-weight: 800;
+        }
+
+        .lead {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-line {
+            position: absolute;
+            left: 3rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--subtle);
+            z-index: -1;
+        }
+
+        .section {
+            position: relative;
+            margin-bottom: 5rem;
+            padding-left: 3rem;
+        }
+
+        .section-marker {
+            position: absolute;
+            left: 2.2rem;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 4px solid var(--ground);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin: 0 0 1rem 0;
+            color: var(--accent);
+        }
+
+        .challenge-card {
+            background: var(--highlight);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .challenge-card strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .breakthrough {
+            font-style: italic;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .mental-model {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .model-box {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .model-box.before {
+            background: var(--subtle);
+            opacity: 0.7;
+        }
+
+        .model-box.after {
+            background: var(--highlight);
+            border-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .model-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+        }
+
+        .diagram-container {
+            margin: 2rem 0;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        [data-theme="dark"] .diagram-container {
+            background: var(--subtle);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 6rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--subtle);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="eyebrow">Learning Log: TypeScript</span>
+            <h1>Mastering TypeScript OOP: An Architect's Log</h1>
+            <p class="lead">Moving from "making code work" to "architecting systems." A journey through the pillars of Object-Oriented Programming.</p>
+        </header>
+
+        <div class="progress-line"></div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>The Shift to Structural Thinking</h2>
+            <p>For a long time, my approach to coding was procedural. I wrote functions, I looped through arrays, and if the output was correct, I was happy. But as my projects grew, I hit a wall. My "simple" scripts were becoming a tangled web of global variables and repetitive logic.</p>
+            <p>The transition to Object-Oriented Programming (OOP) wasn't just about learning new keywords like <code>class</code> or <code>interface</code>; it was about shifting my mindset. I stopped asking <em>"What happens next?"</em> and started asking <em>"What is this thing, and what are its responsibilities?"</em></p>
+        </div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>The Blueprint Era: Classes & Constructors</h2>
+            <p>My first encounter with Classes felt like discovering a factory. Instead of manually crafting every object, I could create a blueprint.</p>
+
+            <div class="challenge-card">
+                <strong>The Pain Point</strong>
+                I was creating multiple "Student" objects manually. Every time I added a new field (like <code>email</code>), I had to update every single object literal in my code. It was a maintenance nightmare.
+                <div class="breakthrough">
+                    <strong>The Breakthrough:</strong> The Constructor. Realizing that a class could automate initialization meant I only had to define the structure once.
+                </div>
+            </div>
+
+            <div class="mental-model">
+                <div class="model-box before">
+                    <span class="model-label">Procedural Thinking</span>
+                    "I need another student object with an ID, name, and email."
+                </div>
+                <div class="model-box after">
+                    <span class="model-label">OOP Thinking</span>
+                    "I need an instance of the Student blueprint."
+                </div>
+            </div>
+
+            <pre><code>class Student {
+    constructor(
+        public readonly studentId: number,
+        public name: string,
+        public email?: string
+    ) {}
+}
+
+const stu1 = new Student(101, "Saksham");</code></pre>
+        </div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>Building Walls: Access Modifiers</h2>
+            <p>As I built more complex classes, I noticed a problem: any part of my code could reach inside my objects and change things they shouldn't. I could accidentally change a <code>studentId</code>, which should be immutable.</p>
+
+            <div class="challenge-card">
+                <strong>The Pain Point</strong>
+                "Leakage." My internal class data was too exposed. I didn't have a way to protect critical properties from external interference.
+                <div class="breakthrough">
+                    <strong>The Breakthrough:</strong> Encapsulation. Using <code>private</code> and <code>protected</code> modifiers to hide the "guts" of the class and providing controlled access via Getters and Setters.
+                </div>
+            </div>
+
+            <pre><code>class Student {
+    private _name: string;
+
+    constructor(name: string) { this._name = name; }
+
+    // Controlled access via Getter
+    get name(): string { return this._name; }
+
+    // Controlled mutation via Setter
+    set name(newName: string) {
+        if (newName.length > 0) this._name = newName;
+    }
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>The Family Tree: Inheritance & Polymorphism</h2>
+            <p>Then came the realization that not all objects are unique. Some are specialized versions of others. A <code>Car</code> is a <code>Vehicle</code>. An <code>ElectricCar</code> is a <code>Car</code>.</p>
+
+            <div class="challenge-card">
+                <strong>The Pain Point</strong>
+                Repeating the same <code>start()</code> and <code>stop()</code> methods across five different car classes. The code was bloated and hard to update.
+                <div class="breakthrough">
+                    <strong>The Breakthrough:</strong> The <code>extends</code> keyword. I could define common logic in a Parent class and only override the specific parts that changed in the Child class.
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <pre class="mermaid">
+                classDiagram
+                    Vehicle &lt;|-- Car
+                    Car &lt;|-- ElectricCar
+                    class Vehicle {
+                        +name: string
+                        +start()
+                    }
+                    class Car {
+                        +year: number
+                        +start() // Overridden
+                    }
+                    class ElectricCar {
+                        +batteryCapacity: number
+                        +start() // Overridden
+                    }
+                </pre>
+            </div>
+
+            <p>The most "magical" moment was **Polymorphism**. The ability to treat an <code>ElectricCar</code> as a generic <code>Vehicle</code> meant I could create a list of different vehicles and call <code>.start()</code> on all of them without caring about their specific type. The right version of the method always ran.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>The Contract: Interfaces & Abstraction</h2>
+            <p>Eventually, I asked: <em>"What if I don't have a Parent class, but I want to guarantee that several different classes all have the same method?"</em></p>
+
+            <div class="challenge-card">
+                <strong>The Pain Point</strong>
+                The "Interface vs. Abstract Class" dilemma. I struggled to understand when to use a blueprint for identity (Abstract Class) versus a blueprint for behavior (Interface).
+                <div class="breakthrough">
+                    <strong>The Breakthrough:</strong> Thinking of Interfaces as "Contracts." An interface doesn't care what you <em>are</em>; it only cares what you can <em>do</em>.
+                </div>
+            </div>
+
+            <div class="mental-model">
+                <div class="model-box before">
+                    <span class="model-label">Abstract Class</span>
+                    "I am a type of Appliance (Identity)."
+                </div>
+                <div class="model-box after">
+                    <span class="model-label">Interface</span>
+                    "I can make a sound (Capability)."
+                </div>
+            </div>
+
+            <pre><code>interface SoundMaker {
+    sound(): void;
+}
+
+class Dog implements SoundMaker {
+    sound() { console.log("Woof!"); }
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>The Swiss Army Knife: Overloading & Tuples</h2>
+            <p>To wrap up my fundamentals, I dove into the "edge cases" that make TypeScript incredibly flexible: Function Overloading and Tuples.</p>
+            <p>Overloading felt like a puzzle. Writing one implementation that satisfied three different signatures required a deep dive into <strong>Type Guarding</strong>. Tuples, on the other hand, gave me the precision of an array with the safety of a fixed structure.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-marker"></div>
+            <h2>The Final Assembly: Modules</h2>
+            <p>The final step was organization. I moved my logic out of single, massive files and into <strong>Modules</strong>. Using <code>export</code> and <code>import</code> transformed my project from a collection of scripts into a professional codebase.</p>
+        </div>
+
+        <footer>
+            <p>Written by Saksham Sahani • A Journey in TypeScript Fundamentals</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+</body>
+</html>

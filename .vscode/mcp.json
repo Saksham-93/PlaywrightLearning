@@ -1,0 +1,23 @@
+{
+  "servers": {
+    "linkedin": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@pegasusheavy/linkedin-mcp"],
+      "env": {
+        "LINKEDIN_CLIENT_ID": "86puk6bflslgh2",
+        "LINKEDIN_CLIENT_SECRET": "YOUR_LINKEDIN_CLIENT_SECRET"
+      }
+    },
+    "hashnode": {
+      "type": "stdio",
+      "command": "/Users/akratikhera/Desktop/hashnodeMCP/hashnode-mcp-server/.venv/bin/python",
+      "args": [
+        "/Users/akratikhera/Desktop/hashnodeMCP/hashnode-mcp-server/mcp_server.py"
+      ],
+      "env": {
+        "HASHNODE_PERSONAL_ACCESS_TOKEN": "YOUR_HASHNODE_TOKEN"
+      }
+    }
+  }
+}
