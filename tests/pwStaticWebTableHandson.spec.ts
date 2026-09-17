@@ -98,3 +98,11 @@ test.describe('Static Web Table Handling', () => {
         }
     });
 });
+
+test.describe('Data Processing Validations',()=>{
+    
+  //  11. Calculate total price of all products → Expected: 999 + 29 + 79 + 349 = 1456
+   //12. Find product with highest price → Expected: Laptop ($999)
+//13. Find product with lowest price → Expected: Mouse ($29)
+//14. Print products with price greater than $100 → Expected: Laptop, Monitor
+})
