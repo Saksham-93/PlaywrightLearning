@@ -1,10 +1,17 @@
 import {test,expect,Locator} from "@playwright/test"
 
 /**
+ * Test Suite: Handling Playwright Action with Radio Button
+ *
+ * Context:
  * This test suite demonstrates how to interact with Radio Buttons in Playwright.
- * It covers enabling checks and selecting a specific radio button by its label.
+ * Unlike checkboxes, radio buttons are typically used for mutually exclusive options.
+ *
+ * Key Learnings:
+ * - Using `getByLabel` to locate radio buttons.
+ * - Handling potential multiple matches with `.first()`.
+ * - Verifying state using `toBeEnabled()` and `toBeChecked()`.
  */
-
 test("Handling Playwright Action with Radio Button " , async({page})=>{
     // Navigate to the practice page
     await page.goto("https://testautomationpractice.blogspot.com/")
@@ -16,7 +23,7 @@ test("Handling Playwright Action with Radio Button " , async({page})=>{
     // Verify the radio button is enabled and interactable
     await expect(maleRadioBtn).toBeEnabled()
 
-    // Select the radio button
+    // Select the radio button (effectively clicking it)
     await maleRadioBtn.check()
 
     // Verify that the radio button is now checked

@@ -1,0 +1,30 @@
+Test Case: Book Lowest Price Flight Successfully
+Description: Verify that a user can search flights, select the lowest price flight, complete booking, and see
+confirmation message.
+Steps:
+1. Navigate to https://blazedemo.com/
+2. Select Boston as departure city
+3. Select London as destination city
+4. Click on Find Flights button
+5. Verify that flights result table is displayed
+6. Count number of flight rows
+7. Verify at least one flight is available
+8. Capture all flight prices from the table
+9. Identify the lowest price among all flights
+10. Click on Choose This Flight for the lowest price row
+11. Enter passenger details:
+• Name: John
+• Address: 1403 American Beauty Ln
+• City: Columbus
+• State: OH
+• Zip Code: 43240
+• Card Type: American Express
+• Card Number: 6789067345231267
+• Expiry Month: 10
+• Expiry Year: 2024
+• Name on Card: John Canedy
+12. Click on Purchase Flight button
+13. Capture confirmation message
+Expected Result:
+• User should be able to book the lowest price flight successfully
+• Confirmation message "Thank you for your purchase" should be displayed
