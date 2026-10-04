@@ -5,8 +5,9 @@ import { test, expect } from "@playwright/test";
  *
  * This spec showcases:
  * 1. Extracting and validating attributes from SVG basic shapes (circle, rect, polygon, ellipse).
- * 2. Automating SVG Bar Charts: Extracting data from SVG rectangles and associating
- *    them with their corresponding text labels to find the highest value.
+ * 2. Handling SVG-specific attributes: Using getAttribute() to verify properties like 'cx', 'cy', 'r', 'points', and 'fill'.
+ * 3. Managing Strict Mode Violations: Scoping locators to specific UI cards to ensure unique element selection.
+ * 4. Data Validation in SVGs: Verifying that graphic elements (like rectangles) possess expected dimensions and visual properties.
  *
  * SVG elements are treated as standard DOM elements in Playwright, allowing
  * us to use locators and getAttribute() to verify visual properties.
