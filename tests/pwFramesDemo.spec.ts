@@ -30,6 +30,9 @@ test("Handling IFrames ", async({page})=>{
 })
 
 test("Handling Child IFrames ", async({page})=>{
+    test.setTimeout(90000);
+
+   await page.goto("https://ui.vision/demo/webtest/frames/")
 
    await page.goto("https://ui.vision/demo/webtest/frames/")
    
@@ -39,6 +42,24 @@ test("Handling Child IFrames ", async({page})=>{
     const childFrame = parentFrame.frameLocator("iframe")
 
     console.log(await childFrame.locator(".cBGGJ").textContent())
+
+    await childFrame.getByRole('radio', { name: 'I am a human' }).click();
+    await childFrame.getByRole('checkbox', { name: 'Form Autofilling' }).click();
+    await childFrame.getByText('Next').click();
+
+    // Adding a small wait for the next page of the form to load
+    await page.waitForTimeout(1000);
+
+    await childFrame.getByRole('textbox', { name: 'Enter a short text' }).fill("Short Message");
+    
+    
+    await childFrame.locator('div.geS5n > div.AgroKb:nth-of-type(2) > div.edhGSc.zKHdkd > div.RpC4Ne.oJeWuf:nth-of-type(1) > div.Pc9Gce.Wic03c:nth-of-type(2) > textarea.KHxj8b.tL9Q4c').fill("Answers");
+
+    await childFrame.getByText('Submit').first().click();
+
+     await expect(childFrame.locator('body.mcWRN > div.Uc2NEf:nth-of-type(1) > div.teQAzf > div.RH5hzf.RLS9Fe > div.idZHHb:nth-of-type(1) > div.vHW8K:nth-of-type(3)')).toContainText("Thank you for testing the UI")
+
+
    
  
 })
